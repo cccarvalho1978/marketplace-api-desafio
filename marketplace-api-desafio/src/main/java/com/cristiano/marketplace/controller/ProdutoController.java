@@ -1,10 +1,12 @@
 package com.cristiano.marketplace.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cristiano.marketplace.domain.Produto;
+import com.cristiano.marketplace.dto.PesquisaDTO;
 import com.cristiano.marketplace.dto.ProdutoDTO;
+import com.cristiano.marketplace.dto.ProdutoPesquisaDTO;
 import com.cristiano.marketplace.exception.ResourceNotFoundException;
 import com.cristiano.marketplace.service.ProdutoService;
 
@@ -97,6 +102,28 @@ public class ProdutoController {
 		 return response;
 	 }
 	 
-	 
+	 /**
+	  * Search products by name
+	  * @param nomeProduto
+	  * @param page
+	  * @param size
+	  * @return
+	  */
+	 @GetMapping("/search")
+	 public ResponseEntity<PesquisaDTO> search(@RequestParam("nome") String nomeProduto, 
+			 @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+			 @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+
+		 Page<Produto> produtos = produtoService.searchProduct(nomeProduto, page, size);
+		 
+		 PesquisaDTO pesquisa = new PesquisaDTO();
+		 pesquisa.setDataPesquisa(new Date());
+		 pesquisa.setTermoPesquisado(nomeProduto);
+		 
+		 Page<ProdutoPesquisaDTO> listaProdutosDto = produtos.map(produto -> new ProdutoPesquisaDTO(produto) );
+		 pesquisa.setProdutos(listaProdutosDto.toList());
+		 
+		 return ResponseEntity.ok().body(pesquisa);
+	 }
 	 
 }

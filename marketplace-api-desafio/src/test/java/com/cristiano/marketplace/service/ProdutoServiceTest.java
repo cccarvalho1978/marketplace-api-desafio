@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.cristiano.marketplace.domain.Categoria;
@@ -119,7 +120,7 @@ public class ProdutoServiceTest {
 	 * Testing delete product
 	 */
 	@Test
-	public void deleteProduct() {
+	public void testDeleteProduct() {
 		
 		try {
 			produtoService.deleteProduct(PRODUTO_ID_3);
@@ -135,6 +136,21 @@ public class ProdutoServiceTest {
 		} catch (ResourceNotFoundException e) {
 			assertTrue(true);
 		}
+	}
+	
+	@Test
+	public void testSearchProduct() {
+
+		String name = "Produto 1";
+
+		Page<Produto> produtos = produtoService.searchProduct(name, 0, 10);
+
+		assertNotNull(produtos);
+
+		produtos.forEach( p -> {
+			assertTrue(p.getNome().startsWith(name));
+		});
+
 	}
 
 }

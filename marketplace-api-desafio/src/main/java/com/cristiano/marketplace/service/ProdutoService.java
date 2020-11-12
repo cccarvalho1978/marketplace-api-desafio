@@ -7,6 +7,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cristiano.marketplace.domain.Categoria;
@@ -107,5 +110,24 @@ public class ProdutoService {
 			throw new ResourceNotFoundException("Produto não foi encontrado ( "+idProduct+")");
 		}
 		return retorno.get();
+	}
+	
+	/**
+	 * Search product by name
+	 * @param name
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public Page<Produto> searchProduct(String name, int page, int size) {
+		log.info("Search products name {}", name);
+		
+		// Order by score, nome and categoria.nome
+		PageRequest pageRequest 
+		= PageRequest.of(page, size, Sort.Direction.ASC, "score", "nome", "categoria.nome");
+
+		Page<Produto> produtos = produtoRepository.search(name.toLowerCase(), pageRequest);
+
+		return produtos;
 	}
 }
