@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.cristiano.marketplace.service.NewsApiService;
-import com.cristiano.marketplace.service.ProdutoService;
 
 /**
  * Scheduler that runs every 6 hours finding the total news by category
@@ -35,8 +34,8 @@ public class NoticiasCategoriaScheduler {
 	 * 12:01
 	 * 18:01
 	 * 
-	 */
-	//@Scheduled(cron = "0 1 */6 * * *")
+	 */                  
+	//@Scheduled(cron = "0 1 */6 * * *") // For production
 	@Scheduled(cron = "0 */5 * * * *") // For test five minutes
 	protected void findNewsAllCategories() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
