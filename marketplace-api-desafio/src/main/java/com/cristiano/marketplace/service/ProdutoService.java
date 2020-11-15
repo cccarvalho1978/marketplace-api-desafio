@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -69,6 +71,7 @@ public class ProdutoService {
 	 * @return
 	 * @throws ResourceNotFoundException
 	 */
+	@CacheEvict(value="searchProduct", allEntries=true)
 	public Produto saveProduct(Produto product) throws ResourceNotFoundException{
 		log.info("Save product");
 		
@@ -100,6 +103,7 @@ public class ProdutoService {
 	 * @param idProduct
 	 * @throws ResourceNotFoundException
 	 */
+	@CacheEvict(value="searchProduct", allEntries=true)
 	public void deleteProduct(Long idProduct) throws ResourceNotFoundException{
 		log.info("Delete product {}", idProduct);
 		
@@ -131,6 +135,7 @@ public class ProdutoService {
 	 * @param size
 	 * @return
 	 */
+	@Cacheable(value="searchProduct")
 	public Page<Produto> searchProduct(String name, int page, int size) {
 		log.info("Search products name {}", name);
 		

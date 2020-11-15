@@ -35,8 +35,8 @@ public class NoticiasCategoriaScheduler {
 	 * 18:01
 	 * 
 	 */                  
-	//@Scheduled(cron = "0 1 */6 * * *") // For production
-	@Scheduled(cron = "0 */5 * * * *") // For test five minutes
+	@Scheduled(cron = "0 1 */6 * * *") // For production
+	//@Scheduled(cron = "0 */5 * * * *") // For test five minutes
 	protected void findNewsAllCategories() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		log.info("Begin -- findNewsAllCategories ..."+ sdf.format(new Date()));
