@@ -41,6 +41,6 @@ public class NoticiasCategoriaScheduler {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		log.info("Begin -- findNewsAllCategories ..."+ sdf.format(new Date()));
 		newsApiService.findNewsAllCategories();
-		log.info("End    - findNewsAllCategories ..."+ sdf.format(new Date()));
+		log.info("End   -- findNewsAllCategories ..."+ sdf.format(new Date()));
 	}
 }

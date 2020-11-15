@@ -35,6 +35,9 @@ public class ProdutoServiceTest {
 	@Autowired
 	private ProdutoService produtoService;
 	
+	@Autowired
+	private NewsApiService newsApiService;
+	
 	/**
 	 * Testing product that exists
 	 */
@@ -138,6 +141,9 @@ public class ProdutoServiceTest {
 		}
 	}
 	
+	/**
+	 * Test search products
+	 */
 	@Test
 	public void testSearchProduct() {
 
@@ -152,5 +158,33 @@ public class ProdutoServiceTest {
 		});
 
 	}
+	
+	
+	/**
+	 * Test calculate score
+	 * @throws Exception
+	 */
+	@Test
+	public void testCalculateScore() throws Exception {
+
+		// Find product
+		Produto product = produtoService.findProductById(PRODUTO_ID_1);
+		// Persist score null
+		product.setScore(null);
+		produtoService.saveProduct(product);
+		
+		// Persist news by cateogy 
+		newsApiService.findNewsAllCategories();
+
+		// Persist calculate score
+		produtoService.calculateScore();
+		
+		product = produtoService.findProductById(PRODUTO_ID_1);
+		
+		assertTrue(product.getScore()>0);
+		
+		
+	}
+	
 
 }

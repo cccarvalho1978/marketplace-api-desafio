@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import com.cristiano.marketplace.domain.Categoria;
 import com.cristiano.marketplace.domain.Produto;
 import com.cristiano.marketplace.exception.ResourceNotFoundException;
+import com.cristiano.marketplace.repository.AvaliacaoItemVendaRepository;
 import com.cristiano.marketplace.repository.CategoriaRepository;
+import com.cristiano.marketplace.repository.ItemVendaRepository;
+import com.cristiano.marketplace.repository.NoticiaCategoriaRepository;
 import com.cristiano.marketplace.repository.ProdutoRepository;
 
 @Service
@@ -30,6 +33,15 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
+	@Autowired
+	 private ItemVendaRepository itemVendaRepository;
+	
+	 @Autowired
+	 private AvaliacaoItemVendaRepository avaliacaoItemVendaRepository;
+	 
+	 @Autowired
+	 private NoticiaCategoriaRepository noticiaCategoriaRepository;
+	 
 	/**
 	 * Find product by id
 	 * @param idProduct
@@ -130,4 +142,63 @@ public class ProdutoService {
 
 		return produtos;
 	}
+	
+	
+	/**
+	  * Calculate score
+	  * 
+	  * X = Average product rating over the past 12 monthss
+	  * Y = Quantity of sales / days the product exists
+	  * Z = Quantity of product category news for the current day
+	  * 
+	  * Score = X + Y + Z
+	  * 
+	  */
+	 public void calculateScore() {
+		 
+		 Iterable<Produto> products = produtoRepository.findAll();
+		 
+		 products.forEach(product -> {
+			 
+			 // X = Average product rating over the past 12 monthss
+			 Long x = avaliacaoItemVendaRepository.findAverageEvaluationProductYearly(product.getId());
+			 if(x==null) 
+				 x = Long.valueOf(0);	 
+				 
+			 // Y = Quantity of sales / days the product exists
+			 Integer daysProductExistence = this.getDifferenceDays(product.getDataCriacao(),new Date());			 
+			 Long y = itemVendaRepository.findSalesPerDaysExistenceProduct(product.getId(), daysProductExistence);
+			 if(y==null)
+				 y = Long.valueOf(0);
+			 
+			 // Z = Quantity of product category news for the current day
+			 Long z = noticiaCategoriaRepository.findNewsByCategory(product.getCategoria().getId());
+			 if(z==0)
+				 z = Long.valueOf(0);
+			 
+			 Long score = x + y + z;
+			 product.setScore(score);
+			 
+			 produtoRepository.save(product);
+			 
+		 });
+		 
+		 
+	 }
+	 
+	 /**
+	  * Difference days between two dates
+	  * 
+	  * @param d1
+	  * @param d2
+	  * @return
+	  */
+	 public int getDifferenceDays(Date d1, Date d2) {
+		 int daysdiff = 0;
+		 long diff = d2.getTime() - d1.getTime();
+		 long diffDays = diff / (24 * 60 * 60 * 1000) + 1;
+		 daysdiff = (int) diffDays;
+		 return daysdiff;
+	 }
+	
 }
