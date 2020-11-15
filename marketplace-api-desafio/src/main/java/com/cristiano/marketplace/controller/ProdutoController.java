@@ -1,13 +1,17 @@
 package com.cristiano.marketplace.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +27,7 @@ import com.cristiano.marketplace.dto.PesquisaDTO;
 import com.cristiano.marketplace.dto.ProdutoDTO;
 import com.cristiano.marketplace.dto.ProdutoPesquisaDTO;
 import com.cristiano.marketplace.exception.ResourceNotFoundException;
+import com.cristiano.marketplace.exception.ValidationException;
 import com.cristiano.marketplace.service.ProdutoService;
 
 @RestController 
@@ -61,9 +66,20 @@ public class ProdutoController {
 	  * @throws ResourceNotFoundException
 	  */
 	 @PostMapping
-	 public Produto createProduct(@RequestBody ProdutoDTO produtoDTO) throws ResourceNotFoundException {
+	 public  ResponseEntity <Object> createProduct(@Valid @RequestBody ProdutoDTO produtoDTO, 
+			                                       BindingResult result) throws ResourceNotFoundException, ValidationException {
+		 
+		 if(result.hasErrors()) {
+			 List<String> messages = new ArrayList<String>();
+			 result.getAllErrors().forEach(error->{
+				 messages.add(error.getDefaultMessage());
+			 });
+			 throw new ValidationException(messages);
+		 }
+		 
 		 Produto produto = produtoDTO.transformToEntity();
-		 return produtoService.saveProduct(produto);
+		 
+		 return ResponseEntity.ok(produtoService.saveProduct(produto));
 	 }
 
 	 /**
@@ -74,8 +90,17 @@ public class ProdutoController {
 	  * @throws ResourceNotFoundException
 	  */
 	 @PutMapping("/{id}")
-	 public ResponseEntity <Produto> updateProduct(@PathVariable(value = "id") Long produtoId,
-			 									   @RequestBody ProdutoDTO produtoDetails) throws ResourceNotFoundException {
+	 public ResponseEntity <Object> updateProduct(@PathVariable(value = "id") Long produtoId,
+			 									   @Valid @RequestBody ProdutoDTO produtoDetails, 
+			 									   BindingResult result) throws ResourceNotFoundException, ValidationException {
+		 
+		 if(result.hasErrors()) {
+			 List<String> messages = new ArrayList<String>();
+			 result.getAllErrors().forEach(error->{
+				 messages.add(error.getDefaultMessage());
+			 });
+			 throw new ValidationException(messages);
+		 }
 		 
 		 Produto produtoD = produtoDetails.transformToEntity();
 		 produtoD.setId(produtoId);
