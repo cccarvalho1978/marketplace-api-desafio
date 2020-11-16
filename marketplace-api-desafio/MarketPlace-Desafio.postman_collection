@@ -1,0 +1,531 @@
+{
+	"info": {
+		"_postman_id": "5722122e-31ab-4616-b158-2294fd1f2c3b",
+		"name": "MarketPlace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Gerar Token - Senha errada - Marketplace",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b8fd33c-9722-4068-856f-62c2a318a490",
+						"exec": [
+							"var data = pm.response.json();\r",
+							"pm.variables.set('token', data.access_token)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "marketplace-hotmart",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "cristiano",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					]
+				},
+				"description": "URL para geração do Token"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar os produtos cadastrados sem o  token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3635e37b-3a0a-4be0-882b-858ed7e25e96",
+						"exec": [
+							"pm.test(\"The response has all properties\", () => { \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.error).to.eql('invalid_token');\r",
+							"    pm.expect(responseJson.error_description).to.eql('Invalid access token: ');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gerar Token - Marketplace",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "782254a0-5222-446f-8a3f-7072bf34bf06",
+						"exec": [
+							"var data = pm.response.json();\r",
+							"pm.variables.set('token', data.access_token)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "marketplace-hotmart",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "cristiano",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					]
+				},
+				"description": "URL para geração do Token"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos os produtos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4bba2e2f-beae-4e5f-8459-3793437e642e",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gravar produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6022c261-404a-4015-b996-360bab4064c1",
+						"exec": [
+							"var data = pm.response.json();\r",
+							"pm.variables.set('produto', data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Produto Postman\",\r\n  \"categoriaId\": 3,\r\n  \"descricao\": \"Descrição produto postman...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar produto gravado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos/{{produto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos",
+						"{{produto}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar produto gravado",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Produto Postman Alterado\",\r\n  \"categoriaId\": 3,\r\n  \"descricao\": \"Descrição produto postman alterado...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos/{{produto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos",
+						"{{produto}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar produto gravado - Alterado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7e86317c-acd1-41fa-9734-bdbd9be6c4c4",
+						"exec": [
+							"pm.test(\"The response has all properties\", () => { \r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.nome).to.eql('Produto Postman Alterado');\r",
+							"    pm.expect(responseJson.descricao).to.eql('Descrição produto postman alterado...');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos/{{produto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos",
+						"{{produto}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Produto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nome",
+							"value": "Produto Postman Alterado",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f6300b54-f21c-4f86-ba5c-fdadb66b4d19",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/produtos/{{produto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"produtos",
+						"{{produto}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "edd7ab41-11d7-4d7f-a953-b509948d88f4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8c1237ce-72d9-47b8-8187-3839406786a1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "daf12b74-bb85-44ce-9cf8-e7c792843446",
+			"key": "token",
+			"value": ""
+		},
+		{
+			"id": "1d457e10-1dba-4556-a216-88d9567d0ef6",
+			"key": "produto",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
