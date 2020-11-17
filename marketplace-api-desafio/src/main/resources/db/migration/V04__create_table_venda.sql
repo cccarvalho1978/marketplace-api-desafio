@@ -50,47 +50,10 @@ insert into venda (id_vendedor,id_comprador,data_venda) values (1,1,CURRENT_DATE
 insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),1,2,20.00);
 insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),3);
 
+
+
 insert into venda (id_vendedor,id_comprador,data_venda) values (1,2,CURRENT_DATE);
 insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),1,1,10.00);
 insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),5);
 
-insert into venda (id_vendedor,id_comprador,data_venda) values (2,3,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),3,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),2);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (2,4,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),4,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),5);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (3,5,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),5,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),1);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (5,6,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),6,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),4);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (4,6,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),6,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),3);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (1,2,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),10,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),4);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (1,2,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),11,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),3);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (4,3,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),13,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),4);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (2,3,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),15,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),5);
-
-insert into venda (id_vendedor,id_comprador,data_venda) values (5,6,CURRENT_DATE);
-insert into item_venda (id_venda,id_produto,quantidade,valor) values (IDENTITY(),18,1,10.00);
-insert into avaliacao_item_venda (id_item_venda,avaliacao) values (IDENTITY(),5);
 
